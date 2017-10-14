@@ -1,23 +1,30 @@
-#include <stdio.h>
 #include <sys/mman.h>
-#include <stdlib.h>
 #include <unistd.h>
 #include <string.h>
-unsigned char x[] = {
-  0x55, 0x48, 0x89, 0xe5, 0x48, 0x89, 0x7d, 0xf8, 0x48, 0x8b, 0x45, 0xf8,
-  0x8b, 0x00, 0x8d, 0x50, 0x01, 0x48, 0x8b, 0x45, 0xf8, 0x89, 0x10, 0xb8,
-  0x00, 0x00, 0x00, 0x00, 0x5d, 0xc3, 0x55, 0x48
-};
-int main()
+#include <stdio.h>
+typedef int (*pfun_add)(int*);
+unsigned char *ucfun_add="\x55\x48\x89\xe5\x48\x89\x7d\xf8\x48\x8b\x45\xf8\x8b\x00\x8d\x50\x01\x48\x8b\x45\xf8\x89\x10\xb8\x00\x00\x00\x00\x5d\xc3";
+
+pfun_add init_fun_add()
 {
-  int (*f)(int*);
-  int a;  
-  char *exe=mmap(NULL, getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC, MAP_ANONYMOUS | MAP_SHARED, -1, 0);
-  memcpy(exe,x,32);
-  a=0;
-  f=(void*)exe;
+  size_t szfun_add=37;
+  pfun_add pf=(pfun_add)mmap(NULL, szfun_add, PROT_READ | PROT_WRITE | PROT_EXEC, MAP_ANONYMOUS | MAP_SHARED, -1, 0);
+  memcpy(pf,ucfun_add,szfun_add);
+  return pf;
+}
+
+// Modify the typedef line above to match your dumped function.
+// An example of calling the binary function.
+//-------------------------
+//   pfun_add fun_add=init_fun_add();
+//   fun_add();
+//-------------------------
+//
+int main(){
+  int a=0;
+  pfun_add fun_add=init_fun_add();
   printf("a=%d\n",a);
-  f(&a);
+  fun_add(&a);
   printf("a=%d\n",a);
   return 0;
 }

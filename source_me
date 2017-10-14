@@ -6,12 +6,12 @@ _fdump()
   pre2=${COMP_WORDS[COMP_CWORD-2]}
   
   case $pre in
-    -dump|-list|-dumphex)
+    -dump|-list|-dumphex|-dumpc)
       rep=`file *|sed -n '/ELF/{s/:.*$//;p}'`
     ;;
     *)
     if [ "$pre" == "$1" ]; then
-      rep="-dump -list -dumphex"
+      rep="-dump -list -dumphex -dumpc"
     elif [ -f "$pre" ]; then
       rep=`$1 -list`
     fi

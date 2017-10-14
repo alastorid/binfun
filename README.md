@@ -1,6 +1,6 @@
 # fdump
 
-dump function binary code from binary elf.
+A simple tool to dump function binary code from binary elf.  Note that it doesn't corp with call. Any function contains call to other function will fail definitely.
 
 ## how to use?
 
