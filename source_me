@@ -7,7 +7,7 @@ _fdump()
   
   case $pre in
     -dump|-list|-dumphex|-dumpc)
-      rep=`file *|sed -n '/ELF/{s/:.*$//;p}'`
+      rep=`file $cur*|sed -n '/ELF\|directory/{s/:.*$//;p}'`
     ;;
     *)
     if [ "$pre" == "$1" ]; then
