@@ -38,6 +38,7 @@ A simple tool to dump function binary code from binary elf.  Note that it doesn'
     ````
 
 # explore functions with
+````
 ./fdump.sh [tab]
 ````
 
