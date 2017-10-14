@@ -7,7 +7,7 @@ dump function binary code from binary elf.
 ````
 . ./source_me
 ./fdump.sh -dumphex ./a.out fun_add
-# explorer functions with
+# explore functions with
 ./fdump.sh [tab]
 ````
 
